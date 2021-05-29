@@ -6,7 +6,7 @@
    <button type="button" class="btn-close shadow-none btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-    <div class="card border-0 shadow-sm py-2">
+    <div class="card border-0 shadow-sm p-3">
         <div class="ms-4">
             <h4 class="mb-3">Create Transaction Detail</h4>
             <div class="row">
@@ -23,6 +23,16 @@
               <div class="col">Email</div>
               <div class="col">:</div>
               <div class="col">{{$data->email}}</div>
+            </div>
+            <div class="row">
+              <div class="col">Kurir</div>
+              <div class="col">:</div>
+              <div class="col">{{$data->kurir}}</div>
+            </div>
+            <div class="row">
+              <div class="col">Status Pengiriman</div>
+              <div class="col">:</div>
+              <div class="col">{{$data->pengiriman}}</div>
             </div>
         </div>
     </div>

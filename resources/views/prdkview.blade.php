@@ -12,15 +12,15 @@
         <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name Product</th>
-                <th scope="col">Desc</th>
-                <th scope="col">kode</th>
-                <th scope="col">harga</th>
-                <th scope="col">stock</th>
-                <th scope="col">Name Brand</th>
-                <th scope="col">Brand Category</th>
-                <th scope="col">Action</th>
+                <th scope="col" >#</th>
+                <th scope="col" >Name Product</th>
+                <th scope="col" >Desc</th>
+                <th scope="col" >kode</th>
+                <th scope="col" >harga</th>
+                <th scope="col" >stock</th>
+                <th scope="col" >Name Brand</th>
+                <th scope="col" >Brand Category</th>
+                <th scope="col" >Action</th>
               </tr>
             </thead>
             <tbody>

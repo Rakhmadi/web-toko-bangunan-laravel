@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <link href="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.css" rel="stylesheet" type="text/css">
+<script src="https://unpkg.com/vanilla-datatables@latest/dist/vanilla-dataTables.min.js" type="text/javascript"></script>
 
         <style>
             /* width */
@@ -92,7 +94,40 @@
                 margin-left: 3px !important;
             }
   
-            
+            #ribbon {
+	background: #fff none repeat scroll 0 0;
+	box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+	font-weight: 400;
+	padding: 15px;
+	position: fixed;
+	right: -269px;
+	text-align: center;
+	top: -125px;
+	transform: rotate(45deg);
+	transform-origin: 0 0 0;
+	width: 500px;
+	
+	i {
+		font-size: 21px;
+		padding-right: 5px;
+		vertical-align: middle;
+	}
+}
+
+
+.dataTable-sorter::before {
+    bottom: 8px;
+}
+.dataTable-sorter::after {
+    top: 8px;
+}
+
+.selected {
+	td {
+		background-color: #27ae60;
+		color: #fff;
+	}
+}
         </style>
     </head>
     <body>
@@ -160,7 +195,7 @@
                                   <a class="nav-link link-an text-light" href="/sales">Create Order</a>
                               </li>
                               <li class="nav-item">
-                                <a class="nav-link link-an text-light" href="/createProduct">View data order</a>
+                                <a class="nav-link link-an text-light" href="/DataOrderSales">View data order</a>
                             </li>
                           </ul>
                         </div>
@@ -198,6 +233,7 @@
             <div class="container-fluid mt-3">
                 @yield('content')
             </div>
+            
         </div>
            </div>
         </div>
@@ -229,6 +265,43 @@ function resize()
          toggle_visibility()
      }
 }
+ var myTable = document.querySelector("#myTable");
+ var dataTable = new DataTable(myTable,{
+     fixedHeight: true,
+     fixedHeight:true,
+ });
+var table = document.getElementById( "myTable" )
+let thead = table.getElementsByTagName('thead');
+let tbody = table.getElementsByTagName('tbody');
+let xc = thead[0].innerText;
+let head = xc.replace(/([\t])+/g,',').replace(/([\n])/g,'').split(',')
+console.log(head);
+let body_array = [];
+for(let x = 0; x < tbody[0].children.length; x++){
+    body_array.push(tbody[0].children[x].innerText.replace(/([\t])+/g,',').replace(/([\n])/g,'').split(','))
+}
+let c =body_array.reduce((akumulasi,e,index)=>{
+    akumulasi.push(head.reduce((x,y,i)=>{
+        x[y] = e[i];
+        return x;
+    },{}))
+    return akumulasi;
+},[])
+console.table(c);
+let res = head.join()+'\n'
+let csv ='';
+csv += res;
+for (let g = 0; g < body_array.length; g++) {
+    csv += body_array[g].join()+'\n';
+    
+}
+console.log(csv);
+// var element = document.createElement('a');
+//     element.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+//     element.target = '_blank';
+//     element.download = 'export.csv';
+//     element.click();
         </script>
+
     </body>
 </html>

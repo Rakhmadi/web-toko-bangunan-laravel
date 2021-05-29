@@ -16,7 +16,7 @@ class tr_salesController extends Controller
     }
     public function viewDetails($id){
         $y = product::orderBy('created_at','desc')->get();
-        $list = tr_detai_sales::leftJoin('product','transaction_sales_detail.id_product','=','product.id')
+        $list = tr_detai_sales::where('id_transaction','=',$id)->leftJoin('product','transaction_sales_detail.id_product','=','product.id')
         ->leftJoin('brand','brand.id','=','product.id_brand')
         ->select(
             'transaction_sales_detail.id as id',
@@ -33,7 +33,7 @@ class tr_salesController extends Controller
             "transaction_sales_detail.created_at as created_at",
             "transaction_sales_detail.updated_at as updated_at",
         )->get();
-        $totals = tr_detai_sales::leftJoin('product','transaction_sales_detail.id_product','=','product.id')
+        $totals = tr_detai_sales::where('id_transaction','=',$id)->leftJoin('product','transaction_sales_detail.id_product','=','product.id')
         ->leftJoin('brand','brand.id','=','product.id_brand')
         ->select(DB::raw('SUM(product.harga * quantity) as totals'),
         DB::raw('SUM(quantity) as total_qty'))->first();
@@ -89,6 +89,15 @@ class tr_salesController extends Controller
         return redirect("/salesView"."/".$plangganID)->with('success', 'List Deleted successfully.');
     }
     public function getDataOrderList(){
-        tr_sales::leftJoin('transaction_sales_detail','transaction_sales.id','=','')
+       $x = tr_sales::leftJoin('transaction_sales_detail','transaction_sales.id','=','transaction_sales_detail.id_transaction')
+       ->leftJoin('product','transaction_sales_detail.id_product','=','product.id')
+       ->select('transaction_sales.id',
+       'transaction_sales.*',
+       DB::raw('COUNT(transaction_sales_detail.id_transaction) as total_list'),
+       DB::raw('SUM(transaction_sales_detail.quantity) as total_product'),
+       DB::raw('SUM(product.harga * transaction_sales_detail.quantity) as total_harga'))
+       ->groupBy('transaction_sales.id')
+       ->get();
+       return view('viewTRorder',['data'=>$x]);
     }
 }

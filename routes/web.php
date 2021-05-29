@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/getProductData',[tr_salesController::class,'productList']);
     Route::post('/createDetailList/{idtr}',[tr_salesController::class,'createDetailList']);
     Route::get('/deleteDetailList/{idtr}/pelanggan/{plangganID}',[tr_salesController::class,'deleteDetailList']);
-    Route::get("/DataOrderSales",[tr_salesController::class,''])
+    Route::get("/DataOrderSales",[tr_salesController::class,'getDataOrderList']);
     //
     Route::get('/dashboard', function(){
         return view('welcome');
